@@ -4,6 +4,7 @@ import pandas as pd
 # for visualization
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn import preprocessing
 
 targets = ['Low', 'Low-Mid', 'Top-Mid', 'Top']
 h_cols = ['Country', 'GDP', 'Family', 'Life', 'Freedom', 'Generosity', 'Trust']
@@ -39,5 +40,10 @@ class Dataframe :
         sns.heatmap(spearman_cormatrix, vmin=-1, vmax=1, ax=ax[0], center=0, cmap="viridis", annot=True)
         sns.heatmap(spearman_cormatrix, vmin=-.25, vmax=1, ax=ax[1], center=0, cmap="Accent", annot=True)
         plt.show()
+
+    def min_max_scaler(self):
+        min_max_scaler = preprocessing.MinMaxScaler()
+        tmp_df = self.df.iloc[df.index.get_level_values('Year') == 2017].reset_index()
+        tmp_df.loc[:,["Happiness Score"]+h_cols[1:]] = min_max_scaler.fit_transform(tmp_df[["Happiness Score"]+h_cols[1:]])
 
   
